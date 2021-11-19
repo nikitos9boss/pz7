@@ -15,30 +15,25 @@
 <body style="padding-top: 3rem;">
 
 <div class="container">
-    <?php
-    $data = file_get_contents('database/users.csv');
-    $lines = explode("\n",$data);
+    <?php require 'db.php';
+    $sql = "SELECT * FROM users";
+    $result = $conn->query($sql);
     $users = array();
-    $user = array();
-    $tmp = array();
-    $i = 0;
-    foreach ($lines as $line){
-        $tmp = explode(",",$line);
-        if(count($tmp)<4){
-            continue;
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $users[] = [
+                'name' => $row['name'],
+                'email' => $row['email'],
+                'gender' => $row['gender'],
+                'path'=>"<img src='".$row['path_to_img']."'width = 100 height = 111/>"
+            ];
         }
-        $user['name']  = $tmp[0];
-        $user['email']  = $tmp[1];
-        $user['gender']  = $tmp[2];
-        $user['photo'] = "<img src='".$tmp[3]."' width = 100 height = 111/>";
-        $users[$i] = $user;
-        $i++;
     }
     echo "<table>";
-    foreach ($users as $line){
+    foreach ($users as $key=>$user){
         echo "<tr>";
-        foreach ($line as $user){
-            echo "<td>$user</td>";
+        foreach ($user as $value){
+            echo "<td>$value</td>";
         }
         echo "</tr>";
     }
