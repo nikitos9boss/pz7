@@ -41,7 +41,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] === true){
     </form>
     <?php else:?>
     <span>
-        You're already logged. If you want to logout please click <a href="logout.php">here</a>
+        click here for logout  <a href="logout.php">here</a>
     </span>
     <?php endif;?>
 </div>
